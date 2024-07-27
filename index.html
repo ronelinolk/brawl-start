@@ -30,8 +30,20 @@
 
     <script>
         function redirectToGame() {
-            // Замість цього посилання можна використовувати посилання на App Store чи Google Play
-            window.location.href = 'https://brawlstars.com/';
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // Перевірка, чи є пристрій Android
+            if (/android/i.test(userAgent)) {
+                window.location.href = 'intent://brawlstars#Intent;scheme=https;package=com.supercell.brawlstars;end';
+            } 
+            // Перевірка, чи є пристрій iPhone
+            else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                window.location.href = 'brawlstars://';
+            } 
+            // Якщо пристрій не розпізнаний, перенаправлення на веб-сторінку
+            else {
+                window.location.href = 'https://brawlstars.com/';
+            }
         }
     </script>
 </body>
